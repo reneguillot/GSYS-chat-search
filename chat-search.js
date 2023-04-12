@@ -1,7 +1,7 @@
 const platformClient = require("platformClient");
 const clientId = "ca9b9d2c-978e-4da4-a731-f4ede41258cc";
 const redirectUri =
-  "https://reneguillot.github.io/GSYS-chat-search";
+  "https://reneguillot.github.io/GSYS-chat-search/";
 const client = platformClient.ApiClient.instance;
 var md = window.markdownit();
 var state = "";
