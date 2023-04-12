@@ -17,6 +17,7 @@ if (location.protocol !== "https:") {
   );
 }
 
+console.log('start to authenticate');
 // authenticate!
 client
   .loginImplicitGrant(clientId, redirectUri, { state: state })
