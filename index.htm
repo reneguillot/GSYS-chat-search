@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>Chat Search</title>
+    <title>Contact History</title>
     <link
       href="https://fonts.googleapis.com/css?family=Roboto:300,400"
       rel="stylesheet"
@@ -11,28 +11,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" type="text/css" href="style.css" />
     <script src="//code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://sdk-cdn.mypurecloud.com/javascript/72.0.0/purecloud-platform-client-v2.min.js"></script>
-    <script src="markdown-it.min.js"></script>
+    <script src="https://sdk-cdn.mypurecloud.com/javascript/115.0.0/purecloud-platform-client-v2.min.js"></script>
     <script src="debounce.js"></script>
-    <script type="text/javascript" src="chat-search.js"></script>
+    <script type="text/javascript" src="contact-history-search.js"></script>
   </head>
   <body>
     <div class="application-pages">
       <div class="application-toolbar">
         <img src="genesys-logo.png" title="Genesys" width="31" height="50" />
-        <span class="application-toolbar-title">Chat Search</span>
+        <span class="application-toolbar-title">Contact History</span>
+      </div>
+      <div>
+        <table class="info-table">
+          <tr class="data-row"><td class="caption">Conversation ID:</td><td id="conversation-id"></td></tr>
+          <tr class="data-row"><td class="caption">Media Type:</td><td id="conversation-mediatype"></td></tr>
+          <tr class="data-row"><td class="caption">Search Value:</td><td id="history-searchvalue"></td></tr>
+        </table>
       </div>
       <div id="loading" class="application-page centered">
         <img src="loading.gif" alt="Loading..." />
       </div>
       <div id="main-app" class="application-page centered hidden">
-        <div id="search">
-          <span class="fa fa-search"></span>
-          <input
-            type="search"
-            id="search-input"
-            placeholder="Search all chats"
-          />
+        <div id="history-retrieve-controls">
+          <div class="retrieve-parameters">
+            <p>Search interval: <span id="slider-value"></span></p>
+            <input id="interval-range" type="range" min="1" max="30" value="7"/>
+          </div>
+          <div class="button">
+            <button id="retrieve-history">Retrieve History!</button>
+          </div>
         </div>
         <div id="search-results" class="hidden"></div>
       </div>
@@ -40,5 +47,14 @@
         There was a problem communicating with Genesys Cloud.
       </div>
     </div>
+<script>
+  let slider = document.getElementById("interval-range");
+  let current = document.getElementById("slider-value");
+  current.innerText = `${slider.value} day${(slider.value > 1) ? 's' : ''}`;
+
+  slider.oninput = function() {
+    current.innerText = `${this.value} day${(this.value > 1) ? 's' : ''}`;
+  }
+</script>
   </body>
 </html>
