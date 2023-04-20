@@ -73,10 +73,23 @@ a:hover {
   padding: 8px 12px;
 }
 
+.summary {
+  font-size: small;
+}
+
 .info-table {
   border: 1px solid #888;
   width: 96%;
   margin: 12px;
+}
+
+.column-conversationStart, .column-Agent, .column-addressTo, .column-dnis, .column-Queue {
+  border: 1px solid #888;
+  margin: 12px;
+}
+
+.column-conversationStart {
+  width: 200px;
 }
 
 .data-row {

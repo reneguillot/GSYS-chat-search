@@ -56,24 +56,24 @@ function renderSearchResults() {
   console.log(`Rendering results for ${searchResults.length} records...`)
   let resultsHtml = "";
   if (searchResults.length > 0) {
-    resultsHtml += "<table class='info-table'><tr class='info-table'>";
+    resultsHtml += `<hr><p class='summary'>History retrieved: <b>${searchResults.length}</b> record${(searchResults.length > 1) ? 's' : ''}</p><table class='info-table'><tr class='info-table'>`;
     // Take headers from first record
     for (const [key, value] of Object.entries(searchResults[0])) {
-      resultsHtml += `<td class='info-table'>${key}</td>`;
+      resultsHtml += `<th class='column-${key}'>${key}</th>`;
     }
     resultsHtml += "</tr>";
 
     searchResults.forEach((record) => {
       resultsHtml += "<tr class='info-table'>";
       for (const [key, value] of Object.entries(record)) {
-        resultsHtml += `<td class='info-table'>${value}</td>`;
+        resultsHtml += `<td class='column-${key}'>${value}</td>`;
       }
       resultsHtml += "</tr>";
     });
     resultsHtml += "</table>"
   }
   else {
-    resultsHtml = "No results";
+    resultsHtml = "<hr><p class='summary'>No history found</p>";
   }
 
   // show search results
@@ -348,7 +348,7 @@ async function fetchAnalyticsEmailHistory(emailAddress, interval) {
     for (let idx = 0; idx < transposedDataSet.length; idx++) {
       let record = transposedDataSet[idx];
       const agentDataFilter = uniqueAgentData.filter(agent => agent.id === record["Agent"]);
-      record["AgentName"] = (agentDataFilter != undefined) ? agentDataFilter[0].name : '-';
+      record["Agent"] = (agentDataFilter != undefined) ? agentDataFilter[0].name : '-';
     }
     return transposedDataSet;
   }
@@ -430,10 +430,10 @@ async function fetchAnalyticsVoiceHistory(ani, interval) {
     for (let idx = 0; idx < transposedDataSet.length; idx++) {
       let record = transposedDataSet[idx];
       const agentDataFilter = uniqueAgentData.filter(agent => agent.id === record["Agent"]);
-      record["AgentName"] = (agentDataFilter != undefined) ? agentDataFilter[0].name : '-';
+      record["Agent"] = (agentDataFilter != undefined) ? agentDataFilter[0].name : '-';
 
       // const queueDataFilter = uniqueQueueData.filter(queue => queue.id === record["Queue"]);
-      // record["QueueName"] = (queueDataFilter != undefined) ? queueDataFilter[0].name : '-';
+      // record["Queue"] = (queueDataFilter != undefined) ? queueDataFilter[0].name : '-';
     }
 
     return transposedDataSet;
